@@ -1,0 +1,215 @@
+import turtle
+import time
+
+def draw_round_rect(t, x, y, width, height, radius, color):
+    """绘制带有圆角的背景矩形"""
+    t.penup()
+    t.goto(x + radius, y)
+    t.pendown()
+    t.fillcolor(color)
+    t.pencolor(color)
+    t.begin_fill()
+    for _ in range(2):
+        t.forward(width - 2 * radius)
+        t.circle(radius, 90)
+        t.forward(height - 2 * radius)
+        t.circle(radius, 90)
+    t.end_fill()
+
+def draw_line(t, x1, y1, x2, y2, size=4, color="white"):
+    """绘制单根线条的辅助函数"""
+    t.penup()
+    t.goto(x1, y1)
+    t.pendown()
+    t.pensize(size)
+    t.pencolor(color)
+    t.goto(x2, y2)
+
+def draw_rect_outline(t, x, y, width, height, size=4, color="white"):
+    """绘制空心矩形的辅助函数"""
+    t.penup()
+    t.goto(x, y)
+    t.setheading(0)
+    t.pendown()
+    t.pensize(size)
+    t.pencolor(color)
+    for _ in range(2):
+        t.forward(width)
+        t.left(90)
+        t.forward(height)
+        t.left(90)
+
+def draw_logo():
+    # 初始化屏幕
+    screen = turtle.Screen()
+    screen.setup(width=600, height=800)
+    screen.bgcolor("white")
+    screen.title("Beijing Normal-Hong Kong Baptist University Logo")
+
+    t = turtle.Turtle()
+    t.speed(5)          # 设置适当速度
+    t.hideturtle()      # 隐藏海龟光标
+    turtle.tracer(1)    # 开启动画效果
+
+    # ==========================
+    # 1. 绘制纯黑圆角背景
+    # ==========================
+    print("正在绘制背景...")
+    draw_round_rect(t, -230, -330, 460, 660, 20, "black")
+    time.sleep(1)
+
+    # ==========================
+    # 2. 上方几何图形区域
+    # ==========================
+    y_top = 300
+    y_mid = 110
+    y_bot = -80
+    
+    # 垂直线条 (左侧抽象结构)
+    x_1 = -190 # 最左侧极粗线
+    x_2 = -155
+    x_3 = -130
+    x_4 = -60  # 原图中被蓝色选中的中间轴线
+    
+    print("正在绘制垂直线条...")
+    draw_line(t, x_1, y_top, x_1, y_bot, size=18)
+    time.sleep(0.5)
+    draw_line(t, x_2, y_top, x_2, y_bot, size=4)
+    time.sleep(0.5)
+    draw_line(t, x_3, y_top, x_3, y_bot, size=4)
+    time.sleep(0.5)
+    draw_line(t, x_4, y_top, x_4, y_bot, size=4)
+    time.sleep(0.5)
+
+    # 贯穿中部的水平分割线
+    print("正在绘制水平分割线...")
+    draw_line(t, -210, y_mid, 210, y_mid, size=4)
+    time.sleep(0.5)
+
+    # 左侧折线 (上部分的 ">" 形状)
+    print("正在绘制上部分折线...")
+    draw_line(t, x_3, y_top, x_4, 205, size=4)
+    time.sleep(0.5)
+    draw_line(t, x_4, 205, x_3, y_mid, size=4)
+    time.sleep(0.5)
+
+    # 左侧折线 (下部分的 "<" 形状)
+    print("正在绘制下部分折线...")
+    draw_line(t, x_4, y_mid, x_3, 15, size=4)
+    time.sleep(0.5)
+    draw_line(t, x_3, 15, x_4, y_bot, size=4)
+    time.sleep(0.5)
+
+    # ==========================
+    # 3. 绘制右上方 "2005"
+    # ==========================
+    t.setheading(0)
+    print("正在绘制年份 '2005'...")
+    # 数字 2
+    draw_line(t, -30, 230, 10, 230)
+    time.sleep(0.3)
+    draw_line(t, 10, 230, 10, 195)
+    time.sleep(0.3)
+    draw_line(t, 10, 195, -30, 195)
+    time.sleep(0.3)
+    draw_line(t, -30, 195, -30, 160)
+    time.sleep(0.3)
+    draw_line(t, -30, 160, 10, 160)
+    time.sleep(0.5)
+    
+    # 数字 0
+    draw_rect_outline(t, 30, 160, 40, 70)
+    time.sleep(0.5)
+    # 数字 0
+    draw_rect_outline(t, 90, 160, 40, 70)
+    time.sleep(0.5)
+    # 数字 5
+    draw_line(t, 190, 230, 150, 230)
+    time.sleep(0.3)
+    draw_line(t, 150, 230, 150, 195)
+    time.sleep(0.3)
+    draw_line(t, 150, 195, 190, 195)
+    time.sleep(0.3)
+    draw_line(t, 190, 195, 190, 160)
+    time.sleep(0.3)
+    draw_line(t, 190, 160, 150, 160)
+    time.sleep(0.5)
+
+    # ==========================
+    # 4. 绘制右下方 "N B U"
+    # ==========================
+    print("正在绘制字母 'N B U'...")
+    # 字母 N
+    draw_line(t, -30, y_bot, -30, 90)
+    time.sleep(0.5)
+    draw_line(t, -30, 90, 30, y_bot)
+    time.sleep(0.5)
+    draw_line(t, 30, y_bot, 30, 90)
+    time.sleep(0.5)
+    
+    # 字母 B (由矩形和中间横线组成)
+    draw_rect_outline(t, 55, y_bot, 60, 170) 
+    time.sleep(0.5)
+    draw_line(t, 55, 5, 115, 5) 
+    time.sleep(0.5)
+    
+    # 字母 U
+    draw_line(t, 140, 90, 140, -50)
+    time.sleep(0.5)
+    t.penup()
+    t.goto(140, -50)
+    t.setheading(270)
+    t.pendown()
+    t.pensize(4)
+    t.pencolor("white")
+    # 绘制半圆
+    t.circle(30, 180)
+    time.sleep(0.5)
+    t.forward(140)
+    time.sleep(0.5)
+
+    # ==========================
+    # 5. 绘制底部文本及装饰区域
+    # ==========================
+    t.setheading(0)
+    
+    # 带有中间小圆圈的横线
+    print("正在绘制底部装饰...")
+    draw_line(t, -180, -130, -20, -130, size=2)
+    time.sleep(0.5)
+    
+    # 中间圆圈
+    t.penup()
+    t.goto(0, -140)
+    t.pendown()
+    t.pensize(2)
+    t.pencolor("white")
+    t.circle(10)
+    time.sleep(0.5)
+    
+    draw_line(t, 20, -130, 180, -130, size=2)
+    time.sleep(0.5)
+
+    # 下方粗实线
+    draw_line(t, -180, -145, 180, -145, size=2)
+    time.sleep(0.5)
+
+    # 文字排版
+    t.penup()
+    t.goto(0, -210)
+    t.pencolor("white")
+    t.write("Beijing Normal-Hong Kong", align="center", font=("Arial", 16, "bold"))
+    time.sleep(0.5)
+
+    t.penup()
+    t.goto(0, -250)
+    t.write("Baptist University", align="center", font=("Arial", 16, "bold"))
+
+    # 最底部的边界线
+    draw_line(t, -180, -280, 180, -280, size=2)
+
+    print("绘制完成！")
+
+# 运行代码
+if __name__ == "__main__":
+    draw_logo()
